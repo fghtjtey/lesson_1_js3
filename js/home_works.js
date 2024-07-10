@@ -31,13 +31,65 @@ function moveBlock() {
     if (currentPosition <= maxWidthParentBlock && currentPosition_2 === 0) {
         currentPosition++
         animatedBlock.style.left = `${currentPosition}px`
-        // requestAnimationFrame(moveBlock)
+
     }
-    else if(currentPosition >= maxWidthParentBlock && currentPosition_2 === maxWidthParentBlock){
+    else if(currentPosition >= maxWidthParentBlock && currentPosition_2 <= maxWidthParentBlock){
         currentPosition_2++
         animatedBlock.style.top = `${currentPosition_2}px`
-        // requestAnimationFrame(moveBlock)
+
+    }
+    else if(currentPosition >= minWidthParentBlock && currentPosition_2 >= maxWidthParentBlock){
+        currentPosition--
+        animatedBlock.style.left = `${currentPosition}px`
+
+    }
+    else if(currentPosition <= minWidthParentBlock && currentPosition_2 >= minWidthParentBlock){
+        currentPosition_2--
+        animatedBlock.style.top = `${currentPosition_2}px`
+
     }
     requestAnimationFrame(moveBlock)
 }
 moveBlock()
+
+// HOME_WORK 2
+
+const counterElement = document.getElementById('seconds');
+const startButton = document.getElementById('start');
+const stopButton = document.getElementById('stop');
+const resetButton = document.getElementById('reset');
+
+let counterValue = 0;
+let intervalId;
+
+
+function updateCounter() {
+    counterElement.textContent = counterValue;
+}
+
+
+function startCounter() {
+    if (!intervalId) {
+        intervalId = setInterval(() => {
+            counterValue++;
+            updateCounter();
+        }, 1000);
+    }
+}
+
+
+function stopCounter() {
+    clearInterval(intervalId);
+    intervalId = null;
+}
+
+
+function resetCounter() {
+    stopCounter();
+    counterValue = 0;
+    updateCounter();
+}
+
+startButton.addEventListener('click', startCounter);
+stopButton.addEventListener('click', stopCounter);
+resetButton.addEventListener('click', resetCounter);
